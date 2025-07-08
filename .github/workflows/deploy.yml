@@ -1,0 +1,22 @@
+name: Deploy-to-Pi
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build container
+        run: docker compose build
+
+      - name: Stop previous container (if any)
+        run: docker compose down || true
+
+      - name: Run updated container
+        run: docker compose up -d
