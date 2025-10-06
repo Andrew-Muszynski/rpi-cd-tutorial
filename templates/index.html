@@ -9,6 +9,25 @@
             margin: 50px auto;
             padding: 20px;
             text-align: center;
+            background-color: #f0f0f0;
+        }
+        .sensor-box {
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .sensor-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2196F3;
+            margin: 10px 0;
+        }
+        .sensor-label {
+            font-size: 18px;
+            color: #666;
         }
         img {
             max-width: 400px;
@@ -24,15 +43,50 @@
             font-size: 16px;
             margin: 10px;
             border-radius: 5px;
+            cursor: pointer;
         }
         .button:hover {
             background-color: #45a049;
         }
+        .refresh-btn {
+            background-color: #2196F3;
+        }
+        .refresh-btn:hover {
+            background-color: #0b7dda;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to My Raspberry Pi Server!</h1>
+    <h1>Raspberry Pi Sensor Dashboard</h1>
     <p>Powered by Flask on {{ hostname }}</p>
+    
+    <div class="sensor-box">
+        <h2>Live Sensor Data</h2>
+        
+        {% if sensor_data.status == 'success' %}
+            <!-- DHT11 Temperature & Humidity Display -->
+            {% if sensor_data.temperature is not none %}
+                <div>
+                    <div class="sensor-label">Temperature</div>
+                    <div class="sensor-value">{{ sensor_data.temperature }}°{{ sensor_data.unit }}</div>
+                </div>
+                <div>
+                    <div class="sensor-label">Humidity</div>
+                    <div class="sensor-value">{{ sensor_data.humidity }}%</div>
+                </div>
+            {% endif %}
+            
+        {% else %}
+            <p class="error">Sensor Error: {{ sensor_data.status }}</p>
+            <p>Try refreshing the page or check your wiring</p>
+        {% endif %}
+        
+        <button class="button refresh-btn" onclick="location.reload()">Refresh Data</button>
+    </div>
     
     <img src="{{ url_for('static', filename='raspberry_pi.png') }}" alt="Raspberry Pi">
     
