@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Raspberry Pi Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        img {
+            max-width: 400px;
+            border: 2px solid #333;
+            margin: 20px 0;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 32px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Raspberry Pi Server!</h1>
+    <p>Powered by Flask on {{ hostname }}</p>
+    
+    <img src="{{ url_for('static', filename='raspberry_pi.png') }}" alt="Raspberry Pi">
+    
+    <div>
+        <a href="{{ url_for('download_file') }}" class="button">Download Image</a>
+        <a href="{{ url_for('about') }}" class="button">About</a>
+    </div>
+</body>
+</html>
